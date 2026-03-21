@@ -4,7 +4,7 @@ import { errorResponse, successResponse } from "../utils/apiResponse"
 import { Page } from "../zod/page"
 import { db } from "../config/drizzle"
 import { pages } from "../db/schema"
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 
 const pageRouter = express.Router()
 
@@ -62,7 +62,8 @@ pageRouter.put("/:id", async (req, res) => {
 
         await db.update(pages)
             .set({name, category})
-            .where(eq(pages.user_id, userId) && eq(pages.id, id))
+            // .where()
+            .where(and(eq(pages.user_id, userId), eq(pages.id, id)))
 
         return successResponse(res, "Page updated")
     } catch (error) {
@@ -77,7 +78,8 @@ pageRouter.delete("/:id", async (req, res) => {
         const userId = req.user?.id
         const {id} = req.params
 
-        await db.delete(pages).where(eq(pages.user_id, userId) && eq(pages.id, id))
+        await db.delete(pages)
+            .where(and(eq(pages.user_id, userId), eq(pages.id, id)))
 
         return successResponse(res, "Page deleted")
     } catch (error) {

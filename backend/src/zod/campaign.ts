@@ -6,5 +6,5 @@ export const Campaign = z.object({
     objective: string(),
     budget_type: string(),
     budget_amount: float32(),
-    end_date: date()
+    end_date: string() //later date
 })

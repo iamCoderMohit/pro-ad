@@ -1,17 +1,21 @@
 import { doublePrecision, pgTable, text, uuid, timestamp, pgEnum } from "drizzle-orm/pg-core";
 import { pages } from "./page";
+import { users } from "./user";
 
-export const statusEnum = pgEnum("status", ["pause", "resume", "stop"])
+export const statusEnum = pgEnum("status", ["cancelled", "completed", "paused", "draft", "active"])
 
 export const campaign = pgTable("campaigns", {
     id: uuid("id").defaultRandom().primaryKey(),
     page_id: uuid("page_id").references(() => pages.id),
+    user_id: uuid("user_id").references(() => users.id),
     name: text("name"),
     objective: text("objective"),
     budget_type: text("budget_type"),
     budget_amount: doublePrecision("budget_amount"),
     start_date: timestamp("start_date").defaultNow(),
     end_date: timestamp("end_date"),
-    status: statusEnum("status").default("stop"),
+    status: statusEnum("status").default("draft"),
+    amount_spent: doublePrecision("amount_spent").default(0),
+    remaining_budget: doublePrecision("remaining_budget"),
     created_at: timestamp("created_at").defaultNow()
 })

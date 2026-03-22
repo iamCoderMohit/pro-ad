@@ -2,11 +2,11 @@ import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {NgIf} from '@angular/common'
 import {Auth} from "../../services/auth"
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -25,7 +25,7 @@ export class Login {
       const val = this.form.value
       this.authService.login(val.email!, val.password!).subscribe({
         next: (res) => {
-          this.router.navigate(["/pages-list"])
+          this.router.navigate(["/create-page"])
         },
         error: (err) => {
           this.errMsg = err.error.message || 'Login failed'

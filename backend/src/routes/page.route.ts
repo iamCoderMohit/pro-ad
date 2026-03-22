@@ -16,13 +16,12 @@ pageRouter.post("/create", async (req, res) => {
 
         const result = Page.safeParse(body)
 
-        console.log(result)
-
         if(!result.success) {
             return errorResponse(res, "Invalid input")
         }
 
         const userId = req.user?.id
+        console.log(req.user)
 
         await db.insert(pages).values({
             user_id: userId,
@@ -53,6 +52,22 @@ pageRouter.get("/my", async (req, res) => {
     }
 })
 
+// get single page
+pageRouter.get("/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+
+        const page = await db.query.pages.findFirst({
+            where: eq(pages.id, id)
+        })
+
+        return successResponse(res, page as {})
+    } catch (error) {
+        console.error(error)
+        return errorResponse(res, "Can't find page")
+    }
+})
+
 //update your page
 pageRouter.put("/:id", async (req, res) => {
     try {
@@ -62,7 +77,6 @@ pageRouter.put("/:id", async (req, res) => {
 
         await db.update(pages)
             .set({name, category})
-            // .where()
             .where(and(eq(pages.user_id, userId), eq(pages.id, id)))
 
         return successResponse(res, "Page updated")

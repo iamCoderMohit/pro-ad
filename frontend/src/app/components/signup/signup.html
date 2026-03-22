@@ -1,0 +1,9 @@
+<form action="" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="name" placeholder="Name">
+    <input type="email" formControlName="email" placeholder="Email">
+    <input type="password" formControlName="password" placeholder="Password">
+
+    <span *ngIf="form.get('email')?.invalid && form.get('email')?.touched">Invalid email</span>
+
+    <button type="submit" [disabled]="form.invalid" class="bg-black text-white">Signup</button>
+</form>

@@ -4,7 +4,6 @@ import { campaign } from "../db/schema"
 import { campaign_spend_log } from "../db/schema/campaign_spend_log"
 import cron from 'node-cron'
 
-//balance is going to negative too, handle that
 const simulateDailySpend = async () => {
     // get all active campaigns
     const activeCampaigns = await db.select().from(campaign).where(eq(campaign.status, "active"))

@@ -27,7 +27,6 @@ export class CreateCampaign implements OnInit {
   }
   onSubmit() {
     if(this.form.valid) {   
-      console.log('click')
       const val= this.form.value
 
       this.campaignService.create(this.data as string, val.name!, val.objective!, val.type!, val.amount!, val.end_date!).subscribe({

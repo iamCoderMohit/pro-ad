@@ -6,7 +6,7 @@ export const statusEnum = pgEnum("status", ["cancelled", "completed", "paused", 
 
 export const campaign = pgTable("campaigns", {
     id: uuid("id").defaultRandom().primaryKey(),
-    page_id: uuid("page_id").references(() => pages.id),
+    page_id: uuid("page_id").references(() => pages.id, {onDelete: 'cascade'}),
     user_id: uuid("user_id").references(() => users.id),
     name: text("name"),
     objective: text("objective"),

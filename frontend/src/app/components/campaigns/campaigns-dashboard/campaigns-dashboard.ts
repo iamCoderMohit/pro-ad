@@ -1,12 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Campaigns } from '../../../services/campaigns';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { SpendLogs } from '../../../services/spend-logs';
+import { NgIcon, NgIconComponent } from "@ng-icons/core";
 
 @Component({
   selector: 'app-campaigns-dashboard',
-  imports: [NgIf],
+  imports: [NgIf, NgIcon, NgIconComponent],
   standalone: true,
   templateUrl: './campaigns-dashboard.html',
   styleUrl: './campaigns-dashboard.css',
@@ -16,14 +17,17 @@ export class CampaignsDashboard implements OnInit {
     private campaignService: Campaigns,
     private spendLogsService: SpendLogs,
     private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   camp = signal<any>([]);
   currentId: string | null = null
   spendLogs = signal<any>([])
   budgetSummary = signal<any>([])
+  pageId: string | null = null
 
   ngOnInit() {
+    this.pageId = history.state.pageId
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
 
@@ -48,7 +52,15 @@ export class CampaignsDashboard implements OnInit {
     this.campaignService.changeStatus(this.currentId as string).subscribe({})
   }
 
-  getSpendLogs(id: string) {
+  editPage(id: string) {
+    this.router.navigate(['/edit-campaign', id])
+  }
 
+  deleteCamp(id: string) {
+    this.campaignService.deleteCamp(id).subscribe({})
+    this.router.navigate(['/pages-list', this.pageId])
   }
 }
+
+
+// do with the admin things, make it better

@@ -1,6 +1,6 @@
 <div class="px-20">
     <h1 class="font-bold mb-5 text-lg">Page Details</h1>
-    <app-page-card [name]="page().name" [category]="page().category"></app-page-card>
+    <app-page-card [name]="page().name" [category]="page().category" [isHome]="true" [id]="page().id"></app-page-card>
 
     <div class="flex justify-between items-center mb-5 mt-10">
         <h1 class="font-bold  text-lg">Active campaigns</h1>
@@ -8,7 +8,7 @@
     </div>
 
     <div *ngIf="camp() && camp().length > 0" class="flex flex-col gap-5">
-        <div class="flex justify-between px-4">
+        <div class="flex justify-between px-4 font-bold">
             <h1 class="w-1/5">Name</h1>
             <h1 class="w-1/5">Type</h1>
             <h1 class="w-1/5">Budget</h1>
@@ -16,7 +16,7 @@
             <h1 class="w-1/5">Remaining</h1>
         </div>
             <div *ngFor="let camp of camp()" >
-                <app-campaign-detail [id]="camp.id" [name]="camp.name" [type]="camp.budget_type" [amount]="camp.budget_amount" [spent]="camp.amount_spent" [remaining]="camp.remaining_budget || camp.budget_amount"></app-campaign-detail>
+                <app-campaign-detail [id]="camp.id" [name]="camp.name" [type]="camp.budget_type" [amount]="camp.budget_amount" [spent]="camp.amount_spent" [remaining]="camp.remaining_budget || camp.budget_amount" [pageId]="page().id"></app-campaign-detail>
             </div>
     </div>
 </div>

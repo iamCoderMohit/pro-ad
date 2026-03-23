@@ -122,7 +122,7 @@ campaignRouter.delete("/:id", async (req, res) => {
         await db.delete(campaign)
             .where(and(eq(campaign.id, id), eq(campaign.user_id, userId)))
 
-        return errorResponse(res, "Campaign deleted")
+        return successResponse(res, "Campaign deleted")
     } catch (error) {
         console.error(error)
         return errorResponse(res, "Can't delete campaign")

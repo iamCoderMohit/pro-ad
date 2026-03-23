@@ -1,4 +1,26 @@
-<div class="bg-black/20 p-2 border cursor-pointer transition-all hover:bg-black/40" (click)="pageDetail(id)">
-    <h1> <h1 class="inline font-bold">Name : </h1> {{name}}</h1>
-    <h1> <h1 class="inline font-bold">Category : </h1>{{category}}</h1> 
+<div
+  class="bg-black/20 p-2 border cursor-pointer transition-all hover:bg-black/40 flex justify-between"
+  (click)="pageDetail(id)"
+>
+  <div>
+    <h1>
+      <h1 class="inline font-bold">Name :</h1>
+      {{ name }}
+    </h1>
+    <h1>
+      <h1 class="inline font-bold">Category :</h1>
+      {{ category }}
+    </h1>
+  </div>
+
+  @if (isHome) {
+    <div class="flex items-center gap-10 text-2xl">
+      <div (click)="editPage(id)" class="hover:bg-gray-700 px-4">
+        <ng-icon name="heroPencil" />
+      </div>
+      <div class="hover:bg-gray-700 px-4" (click)="pageDelete(id)">
+        <ng-icon name="heroTrash" />
+      </div>
+    </div>
+  }
 </div>

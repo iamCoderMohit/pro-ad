@@ -1,0 +1,18 @@
+<div class="px-80 py-5">
+  <h1 class="text-2xl font-bold mb-10">Edit page</h1>
+
+  <form action="" [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+    <input type="text" 
+    [value]="page().name"
+    formControlName="name" placeholder="name of page" class="border p-1" />
+    <input
+    [value]="page().category"
+      type="text"
+      formControlName="category"
+      placeholder="category of page (eg. Clothing, Teaching, Food)"
+      class="border p-1"
+    />
+
+    <button class="bg-black text-white cursor-pointer" type="submit">Update Page</button>
+  </form>
+</div>

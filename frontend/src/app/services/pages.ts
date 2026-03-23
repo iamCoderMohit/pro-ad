@@ -21,4 +21,11 @@ export class Pages {
     return this.http.get(`${this.baseUrl}/${id}`, {withCredentials: true})
   }
 
+  editPage(id: string, name: string, category: string) {
+    return this.http.put(`${this.baseUrl}/${id}`, {name, category}, {credentials: 'include'})
+  }
+
+  deletePage(id: string) {
+    return this.http.delete(`${this.baseUrl}/${id}`, {credentials: 'include'})
+  }
 }

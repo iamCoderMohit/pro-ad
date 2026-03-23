@@ -15,10 +15,11 @@ export class CampaignDetail {
   @Input() amount!: number
   @Input() spent!: number
   @Input() remaining!: number
+  @Input() pageId!: string
 
   constructor(private router: Router) {}
 
-  dashboard(id: string) {
-    this.router.navigate(["/campaign", id])
+  dashboard(id: string, pageId: string) {
+    this.router.navigate(["/campaign", id], {state: {pageId}})
   }
 }

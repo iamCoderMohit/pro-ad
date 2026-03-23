@@ -1,0 +1,21 @@
+table tr th {
+    /* border: 1px solid black; */
+    text-align: start;
+    padding-inline: 20px;
+    padding-block: 10px;
+}
+
+table tr td {
+    /* border: 1px solid black; */
+    text-align: start;
+    padding-inline: 20px;
+    padding-block: 4px;
+}
+
+table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+table tr:nth-child(odd) {
+    background-color: #c4b7b7;
+}

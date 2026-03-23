@@ -39,6 +39,22 @@ campaignRouter.post("/create", async (req, res) => {
   }
 });
 
+// get all campaigns for a page
+campaignRouter.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id
+
+    const camp = await db.query.campaign.findMany({
+      where: eq(campaign.page_id, id)
+    })
+
+    return successResponse(res, camp)
+  } catch (error) {
+    console.error(error)
+    return errorResponse(res, "Can't find campaigns")
+  }
+})
+
 // get all your campaigns
 campaignRouter.get("/my", async (req, res) => {
   try {

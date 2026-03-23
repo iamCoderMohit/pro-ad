@@ -1,1 +1,12 @@
-<p>create-campaign works!</p>
+<div class="px-60">
+    <h1 class="text-lg font-bold mb-10">Create campaign</h1>
+
+    <form action="" class="flex flex-col gap-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input type="text" formControlName="name" placeholder="campaign name" class="border p-1">
+        <input type="text" formControlName="objective" placeholder="campaign objective (eg. growth)" class="border p-1">
+        <input type="text" formControlName="type" placeholder="budget type (daily, standard)" class="border p-1">
+        <input type="number" formControlName="amount" placeholder="budget amount" class="border p-1">
+        <input type="date" formControlName="end_date" placeholder="end date" class="border p-1">
+        <button class="bg-black text-white cursor-pointer" type="submit">Create</button>
+    </form>
+</div>

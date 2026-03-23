@@ -20,4 +20,5 @@ export class Pages {
   onePage(id: string) {
     return this.http.get(`${this.baseUrl}/${id}`, {withCredentials: true})
   }
+
 }

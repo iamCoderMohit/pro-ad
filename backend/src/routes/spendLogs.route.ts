@@ -15,7 +15,7 @@ spendRouter.get("/:id/spend-logs", async (req, res) => {
     try {
         const logs = await db.select()
                     .from(campaign_spend_log)
-                    .where(eq(campaign_spend_log.id, req.params.id))
+                    .where(eq(campaign_spend_log.campaign_id, req.params.id))
                     .orderBy(desc(campaign_spend_log.date))
 
         return successResponse(res, logs)

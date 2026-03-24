@@ -19,8 +19,15 @@
         <ng-icon name="heroPencil" />
       </div>
       <div class="hover:bg-gray-700 px-4" (click)="pageDelete(id)">
-        <ng-icon name="heroTrash" />
+        @if(loading) {
+          <app-loading [isBlack]="true"></app-loading>
+        } @else {
+          <ng-icon name="heroTrash" />
+        }
       </div>
     </div>
+  } @else {
+    <app-click-btn></app-click-btn>
   }
+
 </div>

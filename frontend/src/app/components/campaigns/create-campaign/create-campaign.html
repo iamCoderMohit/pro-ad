@@ -7,6 +7,12 @@
         <input type="text" formControlName="type" placeholder="budget type (daily, standard)" class="border p-1">
         <input type="number" formControlName="amount" placeholder="budget amount" class="border p-1">
         <input type="date" formControlName="end_date" placeholder="end date" class="border p-1">
-        <button class="bg-black text-white cursor-pointer" type="submit">Create</button>
+        <button class="bg-black text-white cursor-pointer flex justify-center p-1" type="submit">
+            @if(loading) {
+                <app-loading></app-loading>
+            } @else {
+                Create
+            }
+        </button>
     </form>
 </div>

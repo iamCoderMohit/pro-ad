@@ -2,12 +2,14 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import {NgIconComponent} from '@ng-icons/core'
 import { Pages } from "../../../services/pages";
+import { Loading } from "../../loading/loading";
+import { ClickBtn } from "../../click-btn/click-btn";
 
 @Component({
     selector: "app-page-card",
     standalone: true,
     templateUrl: "./page-card.html",
-    imports: [NgIconComponent]
+    imports: [NgIconComponent, Loading, ClickBtn]
 })
 
 export class PageCard {
@@ -17,7 +19,7 @@ export class PageCard {
     @Input() isHome!: boolean
 
     constructor(private router: Router, private pageService: Pages) {}
-
+    loading: boolean = false
   pageDetail(id: string) {
     this.router.navigate(['/pages-list', id]);
   }
@@ -27,8 +29,9 @@ export class PageCard {
   }
 
   pageDelete(id: string) {
-    console.log("click")
+    this.loading = true
     this.pageService.deletePage(id).subscribe({})
+    this.loading = false
     this.router.navigate(['/pages-list'])
   }
 }

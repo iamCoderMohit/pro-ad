@@ -13,6 +13,12 @@
       class="border p-1"
     />
 
-    <button class="bg-black text-white cursor-pointer" type="submit">Update Page</button>
+    <button class="bg-black text-white cursor-pointer flex justify-center p-1" type="submit">
+      @if(loading) {
+        <app-loading></app-loading>
+      } @else {
+        Update Page
+      }
+    </button>
   </form>
 </div>

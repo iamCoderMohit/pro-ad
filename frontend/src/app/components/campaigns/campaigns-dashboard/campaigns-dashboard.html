@@ -32,17 +32,23 @@
             </tr>
             <tr class="">
                 <th class="">Start date</th>
-                <td>{{camp().start_date}}</td>
+                <td>{{formatDate(camp().start_date)}}</td>
             </tr>
             <tr class="">
                 <th class="">End date</th>
-                <td>{{camp().end_date}}</td>
+                <td>{{formatDate(camp().end_date)}}</td>
             </tr>
             <tr class="">
                 <th class="">Status</th>
                 <td class="flex justify-between items-center">
                     <h1>{{camp().status.toUpperCase()}}</h1>
-                    <button class="bg-black text-white px-2 cursor-pointer" (click)="statusChange()">Change</button>
+                    <button class="bg-black text-white px-2 cursor-pointer flex justify-center" (click)="statusChange(camp().id)">
+                        @if(loading()) {
+                            <app-loading></app-loading>
+                        } @else {
+                            Change
+                        }
+                    </button>
                 </td>
             </tr>
             <tr class="">
@@ -51,7 +57,7 @@
             </tr>
             <tr class="">
                 <th class="">Remaining budget</th>
-                <td> {{camp().remaining_budget}}</td>
+                <td> {{camp().budget_amount - camp().amount_spent}}</td>
             </tr>
         </table>
 

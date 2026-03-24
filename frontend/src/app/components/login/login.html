@@ -7,7 +7,13 @@
 
       <span *ngIf="form.get('email')?.invalid && form.get('email')?.touched"> Invalid email </span>
 
-      <button type="submit" [disabled]="form.invalid" class="bg-black text-white cursor-pointer">Submit</button>
+      <button type="submit" [disabled]="form.invalid" class="bg-black text-white cursor-pointer p-1 flex justify-center">
+        @if(loading) {
+          <app-loading></app-loading>
+        } @else {
+          Submit
+        }
+      </button>
     </form>
     <h1>Don't have an account? <button [routerLink]="['/signup']" class="text-blue-600 inline cursor-pointer">Sign up</button> </h1>
   </div>

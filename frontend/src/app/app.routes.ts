@@ -4,6 +4,8 @@ import { PagesList } from './components/pages/pages-list/pages-list';
 import { Signup } from './components/signup/signup';
 import { CreatePage } from './components/pages/create-page/create-page';
 import { CreateCampaign } from './components/campaigns/create-campaign/create-campaign';
+import { adminGuard } from './guards/admin.guard';
+import { Page } from './components/admin/pages/page';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -16,8 +18,22 @@ export const routes: Routes = [
   },
   { path: 'create-page', component: CreatePage },
   { path: 'create-campaign', component: CreateCampaign },
-  { path: 'campaign/:id', loadComponent: () => import('./components/campaigns/campaigns-dashboard/campaigns-dashboard').then((m) => m.CampaignsDashboard) },
-  { path: 'edit-page/:id', loadComponent: () => import('./components/pages/edit-page/edit-page').then((m) => m.EditPage) },
-  { path: 'edit-campaign/:id', loadComponent: () => import('./components/campaigns/edit-campaign/edit-campaign').then((m) => m.EditCampaign) },
+  {
+    path: 'campaign/:id',
+    loadComponent: () =>
+      import('./components/campaigns/campaigns-dashboard/campaigns-dashboard').then(
+        (m) => m.CampaignsDashboard,
+      ),
+  },
+  {
+    path: 'edit-page/:id',
+    loadComponent: () => import('./components/pages/edit-page/edit-page').then((m) => m.EditPage),
+  },
+  {
+    path: 'edit-campaign/:id',
+    loadComponent: () =>
+      import('./components/campaigns/edit-campaign/edit-campaign').then((m) => m.EditCampaign),
+  },
+  { path: 'admin', canActivate: [adminGuard], children: [{ path: 'pages', component: Page }] },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

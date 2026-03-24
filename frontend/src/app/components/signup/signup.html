@@ -8,7 +8,13 @@
 
       <span *ngIf="form.get('email')?.invalid && form.get('email')?.touched">Invalid email</span>
 
-      <button type="submit" [disabled]="form.invalid" class="bg-black text-white cursor-pointer">Sign up</button>
+      <button type="submit" [disabled]="form.invalid" class="bg-black text-white cursor-pointer flex justify-center p-1">
+        @if(loading()) {
+          <app-loading></app-loading>
+        } @else {
+          Sign up
+        } // user should feel like clicking the page card
+      </button>
     </form>
     <h1>
       Already have an account?

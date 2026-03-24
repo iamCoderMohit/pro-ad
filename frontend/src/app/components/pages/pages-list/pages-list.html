@@ -1,12 +1,25 @@
 <div class="px-20">
-    <div class="flex justify-between">
-        <h1 class="text-lg font-bold">Your pages</h1>
-        <button class="cursor-pointer bg-black text-white p-1 text-sm" (click)="newPage()">Create new</button>
-    </div>
+  <div class="flex justify-between">
+    <h1 class="text-lg font-bold">Your pages</h1>
+    <button class="cursor-pointer bg-black text-white p-1 text-sm" (click)="newPage()">
+      Create new
+    </button>
+  </div>
 
-    <div *ngIf="pages() && pages().length > 0" class="mt-10 flex flex-col gap-5">
-        <div *ngFor="let page of pages()" class=""> 
-            <app-page-card [name]="page.name" [category]="page.category" [id]="page.id" [isHome]="false"></app-page-card>
-        </div>
+  @if (loading()) {
+    <div class="h-40 flex items-center justify-center">
+        <app-loading [isBlack]="true"></app-loading>
     </div>
-</div>   
+  } @else {
+    <div *ngIf="pages() && pages().length > 0" class="mt-10 flex flex-col gap-5">
+      <div *ngFor="let page of pages()" class="">
+        <app-page-card
+          [name]="page.name"
+          [category]="page.category"
+          [id]="page.id"
+          [isHome]="false"
+        ></app-page-card>
+      </div>
+    </div>
+  }
+</div>

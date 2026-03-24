@@ -5,6 +5,11 @@
         <input type="text" formControlName="name" placeholder="name of page" class="border p-1">
         <input type="text" formControlName="category" placeholder="category of page (eg. Clothing, Teaching, Food)" class="border p-1">
 
-        <button class="bg-black text-white cursor-pointer" type="submit">Create Page</button>
+        <button class="bg-black text-white cursor-pointer flex justify-center p-1" type="submit">
+            @if(loading) {
+                <app-loading></app-loading>
+            } @else {
+                Create Page            }
+        </button>
     </form>
 </div>

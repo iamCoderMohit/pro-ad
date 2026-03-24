@@ -1,13 +1,14 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Campaigns } from '../../../services/campaigns';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { SpendLogs } from '../../../services/spend-logs';
 import { NgIcon, NgIconComponent } from "@ng-icons/core";
+import { Loading } from "../../loading/loading";
 
 @Component({
   selector: 'app-campaigns-dashboard',
-  imports: [NgIf, NgIcon, NgIconComponent],
+  imports: [NgIf, NgIcon, NgIconComponent, NgClass, Loading],
   standalone: true,
   templateUrl: './campaigns-dashboard.html',
   styleUrl: './campaigns-dashboard.css',
@@ -25,6 +26,7 @@ export class CampaignsDashboard implements OnInit {
   spendLogs = signal<any>([])
   budgetSummary = signal<any>([])
   pageId: string | null = null
+  loading = signal<boolean>(false)
 
   ngOnInit() {
     this.pageId = history.state.pageId
@@ -48,8 +50,11 @@ export class CampaignsDashboard implements OnInit {
     });
 
   }
-  statusChange() {
+  statusChange(id: string) {
+    this.loading.set(true)
     this.campaignService.changeStatus(this.currentId as string).subscribe({})
+    this.router.navigate(['/campaign', id])
+    this.loading.set(false)
   }
 
   editPage(id: string) {
@@ -60,7 +65,15 @@ export class CampaignsDashboard implements OnInit {
     this.campaignService.deleteCamp(id).subscribe({})
     this.router.navigate(['/pages-list', this.pageId])
   }
+
+  formatDate(date: string) {
+    return new Date(date).toLocaleTimeString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
 }
 
-
-// do with the admin things, make it better

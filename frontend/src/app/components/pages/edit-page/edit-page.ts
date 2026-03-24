@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pages } from '../../../services/pages';
+import { Loading } from "../../loading/loading";
 
 @Component({
   templateUrl: './edit-page.html',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Loading],
 })
 export class EditPage {
   page = signal<any>([]);
@@ -21,6 +22,7 @@ export class EditPage {
   ) {}
 
   currentId: string | null = null;
+  loading: boolean = false
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
@@ -40,10 +42,12 @@ export class EditPage {
   }
 
   onSubmit() {
+    this.loading = true
     if (this.form.valid) {
       const val = this.form.value;
       this.pageService.editPage(this.currentId as string, val.name!, val.category!).subscribe({
         next: () => {
+          this.loading = false
           this.router.navigate(['/pages-list', this.currentId]);
         },
       });

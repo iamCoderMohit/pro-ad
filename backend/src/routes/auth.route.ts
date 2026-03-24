@@ -6,6 +6,7 @@ import { db } from "../config/drizzle";
 import { users } from "../db/schema";
 import jwt from "jsonwebtoken";
 import { eq } from "drizzle-orm";
+import verifyUser from "../middleware/auth";
 
 const authRouter = express.Router();
 
@@ -76,5 +77,15 @@ authRouter.post("/login", async (req, res) => {
     return errorResponse(res, "Can't log in")
   }
 })
+
+authRouter.get("/me", verifyUser, async (req, res) => {
+  try {
+    return successResponse(res, req.user!)
+  } catch (error) {
+    console.error(error)
+    return errorResponse(res, "Can't get user")
+  }
+})
+
 
 export default authRouter;

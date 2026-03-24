@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Campaigns } from '../../../services/campaigns';
 import { Router } from '@angular/router';
+import { Loading } from "../../loading/loading";
 
 @Component({
   selector: 'app-create-campaign',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Loading],
   templateUrl: './create-campaign.html',
   styleUrl: './create-campaign.css',
 })
@@ -20,6 +21,7 @@ export class CreateCampaign implements OnInit {
 
   constructor(private campaignService: Campaigns, private router: Router) {}
   data: string | null = null
+  loading: boolean = false
 
   ngOnInit() {
     const data = history.state.id
@@ -27,10 +29,12 @@ export class CreateCampaign implements OnInit {
   }
   onSubmit() {
     if(this.form.valid) {   
+      this.loading = true
       const val= this.form.value
 
       this.campaignService.create(this.data as string, val.name!, val.objective!, val.type!, val.amount!, val.end_date!).subscribe({
         next: () => {
+          this.loading = false
           this.router.navigate(['/pages-list', this.data])
         }
       })

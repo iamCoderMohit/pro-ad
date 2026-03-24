@@ -1,0 +1,12 @@
+@keyframes moveX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+.animate-move {
+  animation: moveX 1s ease-in-out infinite;
+}
+
+.animate-move-delay {
+  animation: moveX 1s ease-in-out infinite 0.2s;
+}

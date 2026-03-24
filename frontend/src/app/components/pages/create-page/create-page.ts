@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Pages } from '../../../services/pages';
 import { Router } from '@angular/router';
+import { Loading } from "../../loading/loading";
 
 @Component({
   selector: 'app-create-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Loading],
   templateUrl: './create-page.html',
   styleUrl: './create-page.css',
 })
@@ -16,14 +17,17 @@ export class CreatePage {
   })
 
   errMsg = ''
+  loading = false
 
   constructor(private pageService: Pages, private router: Router) {}
 
   onSubmit() {
     if(this.form.valid) {
+      this.loading = true
       const val = this.form.value
       this.pageService.create(val.name!, val.category!).subscribe({
         next: () => {
+          this.loading = false
           this.router.navigate(["/pages-list"])
         },
         error: (err) => {

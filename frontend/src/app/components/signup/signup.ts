@@ -1,12 +1,13 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Auth } from "../../services/auth";
 import { Router, RouterLink } from "@angular/router";
 import { NgIf } from "@angular/common";
+import { Loading } from "../loading/loading";
 
 @Component({
     selector: "app-signup",
-    imports: [ReactiveFormsModule, NgIf, RouterLink],
+    imports: [ReactiveFormsModule, NgIf, RouterLink, Loading],
     templateUrl: "./signup.html"
 })
 
@@ -18,17 +19,21 @@ export class Signup {
     })
 
     errMsg = ''
+    loading = signal<boolean>(false)
 
     constructor(private authService: Auth, private router: Router) {}
 
     onSubmit() {
         if(this.form.valid) {
+            this.loading.set(true)
             const val = this.form.value
             this.authService.signup(val.name!, val.email!, val.password!).subscribe({
                 next: () => {
-                    this.router.navigate(["/pages-list"])
+                    this.loading.set(false)
+                    this.router.navigate(["/create-page"])
                 },
                 error: (err) => {
+                    this.loading.set(false)
                     this.errMsg = err.error.message || "Signup failed"
                 }
             })

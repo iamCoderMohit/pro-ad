@@ -3,10 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import {NgIf} from '@angular/common'
 import {Auth} from "../../services/auth"
 import { Router, RouterLink } from '@angular/router';
+import { Loading } from "../loading/loading";
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NgIf, RouterLink],
+  imports: [ReactiveFormsModule, NgIf, RouterLink, Loading],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -17,14 +18,17 @@ export class Login {
   })
 
   errMsg = ''
+  loading = false
 
   constructor(private authService: Auth, private router: Router) {}
 
   onSubmit() {
     if(this.form.valid) {
+      this.loading = true
       const val = this.form.value
       this.authService.login(val.email!, val.password!).subscribe({
         next: (res) => {
+          this.loading = false
           this.router.navigate(["/create-page"])
         },
         error: (err) => {

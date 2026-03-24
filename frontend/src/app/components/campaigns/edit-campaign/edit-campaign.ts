@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Campaigns } from '../../../services/campaigns';
+import { Loading } from "../../loading/loading";
 
 @Component({
   templateUrl: './edit-campaign.html',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Loading],
 })
 export class EditCampaign {
   form = new FormGroup({
@@ -24,6 +25,7 @@ export class EditCampaign {
 
   camp = signal<any>([]);
   currentId: string | null = null
+  loading = false
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -48,6 +50,7 @@ export class EditCampaign {
 
   onSubmit() {
     if (this.form.valid) {
+      this.loading = true
       const val = this.form.value;
 
       this.campaignService
@@ -61,6 +64,7 @@ export class EditCampaign {
         )
         .subscribe({
           next: () => {
+            this.loading = false
             this.router.navigate(['/campaign', this.currentId]);
           },
         });

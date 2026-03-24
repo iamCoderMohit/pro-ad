@@ -3,8 +3,8 @@ import { Campaigns } from '../../../services/campaigns';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf, NgClass } from '@angular/common';
 import { SpendLogs } from '../../../services/spend-logs';
-import { NgIcon, NgIconComponent } from "@ng-icons/core";
-import { Loading } from "../../loading/loading";
+import { NgIcon, NgIconComponent } from '@ng-icons/core';
+import { Loading } from '../../loading/loading';
 
 @Component({
   selector: 'app-campaigns-dashboard',
@@ -18,52 +18,109 @@ export class CampaignsDashboard implements OnInit {
     private campaignService: Campaigns,
     private spendLogsService: SpendLogs,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   camp = signal<any>([]);
-  currentId: string | null = null
-  spendLogs = signal<any>([])
-  budgetSummary = signal<any>([])
-  pageId: string | null = null
-  loading = signal<boolean>(false)
+  currentId: string | null = null;
+  spendLogs = signal<any>([]);
+  budgetSummary = signal<any>([]);
+  pageId: string | null = null;
+  loading = signal<boolean>(false);
+  errMsg = signal('');
 
   ngOnInit() {
-    this.pageId = history.state.pageId
+    this.pageId = history.state.pageId;
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
 
       if (id) {
-        this.currentId = id
-        this.campaignService.oneCamp(id).subscribe((data: any) => {
-          this.camp.set(data.data);
-        });
+        this.currentId = id;
+        this.campaignService.oneCamp(id).subscribe(
+          (data: any) => {
+            this.camp.set(data.data);
+          },
+          () => {
+            this.errMsg.set("Can't get campagin details, try again");
+            this.loading.set(false);
 
-        this.spendLogsService.getDailySpendLogs(id).subscribe((data: any) => {
-          this.spendLogs.set(data.data)
-        }) 
+            setTimeout(() => {
+              this.errMsg.set('');
+            }, 3000);
+          },
+        );
 
-        this.spendLogsService.getBudgetSummary(id).subscribe((data: any) => {
-          this.budgetSummary.set(data.data)
-        })
+        this.spendLogsService.getDailySpendLogs(id).subscribe(
+          (data: any) => {
+            this.spendLogs.set(data.data);
+          },
+          () => {
+            this.errMsg.set("Can't get spend logs, try again");
+            this.loading.set(false);
+
+            setTimeout(() => {
+              this.errMsg.set('');
+            }, 3000);
+          },
+        );
+
+        this.spendLogsService.getBudgetSummary(id).subscribe(
+          (data: any) => {
+            this.budgetSummary.set(data.data);
+          },
+          () => {
+            this.errMsg.set("Can't get budget summary, try again");
+            this.loading.set(false);
+
+            setTimeout(() => {
+              this.errMsg.set('');
+            }, 3000);
+          },
+        );
       }
     });
-
   }
-  statusChange(id: string) {
-    this.loading.set(true)
-    this.campaignService.changeStatus(this.currentId as string).subscribe({})
-    this.router.navigate(['/campaign', id])
-    this.loading.set(false)
+
+  statusValue = signal('DRAFT')
+  manualChange = signal(false)
+
+  statusChange(id: string, value: string) {
+    this.loading.set(true);
+    this.campaignService.changeStatus(this.currentId as string).subscribe(
+      () => {
+        this.manualChange.set(true)
+        this.statusValue.set(value)
+        this.loading.set(false);
+      },
+      () => {
+        this.errMsg.set("Can't change status, try again");
+        this.loading.set(false);
+
+        setTimeout(() => {
+          this.errMsg.set('');
+        }, 3000);
+      },
+    );
   }
 
   editPage(id: string) {
-    this.router.navigate(['/edit-campaign', id])
+    this.router.navigate(['/edit-campaign', id]);
   }
 
   deleteCamp(id: string) {
-    this.campaignService.deleteCamp(id).subscribe({})
-    this.router.navigate(['/pages-list', this.pageId])
+    this.campaignService.deleteCamp(id).subscribe(
+      () => {
+        this.router.navigate(['/pages-list', this.pageId]);
+      },
+      () => {
+        this.errMsg.set("Can't delete campaign, try again");
+        this.loading.set(false);
+
+        setTimeout(() => {
+          this.errMsg.set('');
+        }, 3000);
+      },
+    );
   }
 
   formatDate(date: string) {
@@ -72,8 +129,7 @@ export class CampaignsDashboard implements OnInit {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
-    })
+      minute: '2-digit',
+    });
   }
 }
-

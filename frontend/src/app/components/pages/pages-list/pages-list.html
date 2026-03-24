@@ -11,6 +11,11 @@
         <app-loading [isBlack]="true"></app-loading>
     </div>
   } @else {
+    @if(pages().length === 0) {
+      <div class="mt-10">
+        <i>No pages created yet. create one to get started</i>
+      </div>
+    }
     <div *ngIf="pages() && pages().length > 0" class="mt-10 flex flex-col gap-5">
       <div *ngFor="let page of pages()" class="">
         <app-page-card
@@ -21,5 +26,9 @@
         ></app-page-card>
       </div>
     </div>
+  }
+
+  @if(errMsg() && !loading()) {
+    <app-error [error]="errMsg()"></app-error>
   }
 </div>

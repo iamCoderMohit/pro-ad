@@ -6,6 +6,7 @@
         <input type="text" formControlName="objective" placeholder="campaign objective (eg. growth)" class="border p-1">
         <input type="text" formControlName="type" placeholder="budget type (daily, standard)" class="border p-1">
         <input type="number" formControlName="amount" placeholder="budget amount" class="border p-1">
+        <i>select ending date of campaign</i>
         <input type="date" formControlName="end_date" placeholder="end date" class="border p-1">
         <button class="bg-black text-white cursor-pointer flex justify-center p-1" type="submit">
             @if(loading) {
@@ -15,4 +16,8 @@
             }
         </button>
     </form>
+
+    @if(errMsg()) {
+        <app-error [error]="errMsg()"></app-error>
+    }
 </div>

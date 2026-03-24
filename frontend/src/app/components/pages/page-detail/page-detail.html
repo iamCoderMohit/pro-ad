@@ -20,7 +20,15 @@
     </button>
   </div>
 
-  <div *ngIf="camp() && camp().length > 0" class="flex flex-col gap-5">
+  @if(camp().length === 0) {
+    <div class="mt-10"> 
+      <i>No campaigns found, create one.</i>
+    </div>
+  } @else {
+    <div class="mb-5">
+      <i>click on any campaign for more details</i>
+    </div>
+      <div *ngIf="camp() && camp().length > 0" class="flex flex-col gap-5">
     <div class="flex justify-between px-4 font-bold">
       <h1 class="w-1/5">Name</h1>
       <h1 class="w-1/5">Type</h1>
@@ -46,4 +54,9 @@
       </div>
     }
   </div>
+  }
+
+  @if(errMsg()) {
+    <app-error [error]="errMsg()"></app-error>
+  }
 </div>

@@ -21,4 +21,8 @@
       }
     </button>
   </form>
+
+  @if(errMsg()) {
+    <app-error [error]="errMsg()"></app-error>
+  }
 </div>

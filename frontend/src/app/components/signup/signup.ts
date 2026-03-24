@@ -4,10 +4,11 @@ import { Auth } from "../../services/auth";
 import { Router, RouterLink } from "@angular/router";
 import { NgIf } from "@angular/common";
 import { Loading } from "../loading/loading";
+import { Error } from "../error/error";
 
 @Component({
     selector: "app-signup",
-    imports: [ReactiveFormsModule, NgIf, RouterLink, Loading],
+    imports: [ReactiveFormsModule, NgIf, RouterLink, Loading, Error],
     templateUrl: "./signup.html"
 })
 
@@ -18,7 +19,7 @@ export class Signup {
         password: new FormControl('', Validators.minLength(6))
     })
 
-    errMsg = ''
+    errMsg = signal('')
     loading = signal<boolean>(false)
 
     constructor(private authService: Auth, private router: Router) {}
@@ -33,8 +34,12 @@ export class Signup {
                     this.router.navigate(["/create-page"])
                 },
                 error: (err) => {
+                    this.errMsg.set("Signup failed, try again")
                     this.loading.set(false)
-                    this.errMsg = err.error.message || "Signup failed"
+
+                    setTimeout(() => {
+                        this.errMsg.set('')
+                    }, 3000);
                 }
             })
         }

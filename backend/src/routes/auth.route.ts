@@ -30,7 +30,11 @@ authRouter.post("/signup", async (req, res) => {
 
       const token = jwt.sign({id: user?.id, email: user?.email, role: user?.role}, process.env.JWT_SECRET!);
       
-      res.cookie("token", token)
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: false
+      })
 
     return successResponse(res, "User created");
   } catch (error: any) {
@@ -69,7 +73,11 @@ authRouter.post("/login", async (req, res) => {
 
     const token = jwt.sign({id: user.id, email: user.email, role: user.role}, process.env.JWT_SECRET!)
     
-    res.cookie("token", token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: false
+      })
 
     return successResponse(res, "Logged in successfully")
   } catch (error) {

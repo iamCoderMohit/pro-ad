@@ -18,6 +18,7 @@
       class="border p-1"
     />
     <input type="number" [value]="camp().amount" formControlName="amount" placeholder="budget amount" class="border p-1" />
+    <i>update end date of campaign</i>
     <input type="date" [value]="camp().end_date" formControlName="end_date" placeholder="end date" class="border p-1" />
     <button class="bg-black text-white cursor-pointer flex justify-center p-1" type="submit">
       @if(loading) {

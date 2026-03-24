@@ -10,8 +10,7 @@ import { Auth } from './services/auth';
 
 function initAuth(auth: Auth) {
   return () => {
-    console.log("running")
-    auth.loadUser();
+    return auth.loadUser();
   }
 }
 

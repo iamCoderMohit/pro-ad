@@ -1,118 +1,133 @@
 <div class="px-20">
-    <div class="mb-10 flex justify-between">
-        <h1 class="text-lg font-bold">Campaign</h1>
-        <div class="flex gap-5 text-white">
-            <button class="bg-black px-4 cursor-pointer text-white" (click)="editPage(camp().id)">
-                <ng-icon name="heroPencil" />
+  <div class="mb-10 flex justify-between">
+    <h1 class="text-lg font-bold">Campaign</h1>
+    <div class="flex gap-5 text-white">
+      <button class="bg-black px-4 cursor-pointer text-white" (click)="editPage(camp().id)">
+        <ng-icon name="heroPencil" />
+      </button>
+      <button class="bg-black px-4 cursor-pointer text-white" (click)="deleteCamp(camp().id)">
+        <ng-icon name="heroTrash" />
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <table class="w-full">
+      <tr class="">
+        <th>Name</th>
+        <td class="px-5">{{ camp().name }}</td>
+      </tr>
+      <tr class="">
+        <th class="">Objective</th>
+        <td>{{ camp().objective }}</td>
+      </tr>
+      <tr class="">
+        <th class="">Budget type</th>
+        <td>{{ camp().budget_type }}</td>
+      </tr>
+      <tr class="">
+        <th class="">Budget amount</th>
+        <td>{{ camp().budget_amount }}</td>
+      </tr>
+      <tr class="">
+        <th class="">Start date</th>
+        <td>{{ formatDate(camp().start_date) }}</td>
+      </tr>
+      <tr class="">
+        <th class="">End date</th>
+        <td>{{ formatDate(camp().end_date) }}</td>
+      </tr>
+      <tr class="">
+        <th class="">Status</th>
+        <td class="flex justify-between items-center">
+          <h1>{{ manualChange() ? statusValue().toUpperCase() : camp().status.toUpperCase() }}</h1>
+          @if (camp().status === 'draft') {
+            <button
+              class="bg-black text-white px-2 cursor-pointer flex justify-center"
+              (click)="statusChange(camp().id, 'active')"
+            >
+              @if (loading()) {
+                <app-loading></app-loading>
+              } @else {
+                Change to {{manualChange() ? 'PAUSE' : 'ACTIVE' }}
+              }
             </button>
-            <button class="bg-black px-4 cursor-pointer text-white" (click)="deleteCamp(camp().id)">
-                <ng-icon name="heroTrash" />
+          } @else if (camp().status === 'active') {
+            <button
+              class="bg-black text-white px-2 cursor-pointer flex justify-center"
+              (click)="statusChange(camp().id, 'paused')"
+            >
+              @if (loading()) {
+                <app-loading></app-loading>
+              } @else {
+                {{manualChange() ? 'ACTIVE' : 'PAUSE' }}
+              }
             </button>
+          }
+        </td>
+      </tr>
+      <tr class="">
+        <th class="">Amount spent</th>
+        <td>{{ camp().amount_spent }}</td>
+      </tr>
+      <tr class="">
+        <th class="">Remaining budget</th>
+        <td>{{ camp().budget_amount - camp().amount_spent }}</td>
+      </tr>
+    </table>
+
+    <div class="mt-10">
+      <h1 class="text-lg font-bold mb-10">Daily spend logs</h1>
+
+      <div class="flex gap-5 flex-col">
+        <div class="flex justify-between bg-[#c4b7b7] px-4">
+          <h1 class="w-1/2 font-bold">Amount</h1>
+          <h1 class="w-1/2 font-bold">Date</h1>
         </div>
+        @for (record of spendLogs(); track record.id) {
+          <div class="flex justify-between bg-[#c4b7b7] px-4">
+            <h1 class="w-1/2">{{ record.amount_spent }}</h1>
+            <h1 class="w-1/2">{{ record.date }}</h1>
+          </div>
+        }
+      </div>
     </div>
 
-    <div>
+    <div class="mt-10">
+      <h1 class="text-lg font-bold mb-10">Budget summary</h1>
 
+      <div>
         <table class="w-full">
-            <tr class="">
-                <th>Name</th>
-                <td class="px-5">{{camp().name}}</td>
-            </tr>
-            <tr class="">
-                <th class="">Objective</th>
-                <td>{{camp().objective}}</td>
-            </tr>
-            <tr class="">
-                <th class="">Budget type</th>
-                <td>{{camp().budget_type}}</td>
-            </tr>
-            <tr class="">
-                <th class="">Budget amount</th>
-                <td>{{camp().budget_amount}}</td>
-            </tr>
-            <tr class="">
-                <th class="">Start date</th>
-                <td>{{formatDate(camp().start_date)}}</td>
-            </tr>
-            <tr class="">
-                <th class="">End date</th>
-                <td>{{formatDate(camp().end_date)}}</td>
-            </tr>
-            <tr class="">
-                <th class="">Status</th>
-                <td class="flex justify-between items-center">
-                    <h1>{{camp().status.toUpperCase()}}</h1>
-                    <button class="bg-black text-white px-2 cursor-pointer flex justify-center" (click)="statusChange(camp().id)">
-                        @if(loading()) {
-                            <app-loading></app-loading>
-                        } @else {
-                            Change
-                        }
-                    </button>
-                </td>
-            </tr>
-            <tr class="">
-                <th class="">Amount spent</th>
-                <td>{{camp().amount_spent}}</td>
-            </tr>
-            <tr class="">
-                <th class="">Remaining budget</th>
-                <td> {{camp().budget_amount - camp().amount_spent}}</td>
-            </tr>
+          <tr>
+            <th>Total budget</th>
+            <td>{{ budgetSummary().total_budget }}</td>
+          </tr>
+          <tr>
+            <th>Amount spent</th>
+            <td>{{ budgetSummary().amount_spent }}</td>
+          </tr>
+          <tr>
+            <th>Remaining</th>
+            <td>{{ budgetSummary().remaining }}</td>
+          </tr>
+          <tr>
+            <th>Percent used</th>
+            <td>{{ budgetSummary().percent_used }}</td>
+          </tr>
+          <tr>
+            <th>Days active</th>
+            <td>{{ budgetSummary().days_active }}</td>
+          </tr>
+          <tr>
+            <th>Days remaining</th>
+            <td>{{ budgetSummary().days_remaining }}</td>
+          </tr>
+          <tr>
+            <th>Avg. daily spend</th>
+            <td>{{ budgetSummary().avg_daily_spend }}</td>
+          </tr>
         </table>
-
-        <div class="mt-10">
-            <h1 class="text-lg font-bold mb-10">Daily spend logs</h1>
-
-            <div class="flex gap-5 flex-col">
-                <div class="flex justify-between bg-[#c4b7b7] px-4">
-                    <h1 class="w-1/2 font-bold">Amount</h1>
-                    <h1 class="w-1/2 font-bold">Date</h1>
-                </div>
-                @for (record of spendLogs(); track record.id) {
-                    <div class="flex justify-between bg-[#c4b7b7] px-4">
-                        <h1 class="w-1/2">{{record.amount_spent}}</h1>
-                        <h1 class="w-1/2">{{record.date}}</h1>
-                    </div>
-                }
-            </div>
-        </div>
-
-        <div class="mt-10">
-            <h1 class="text-lg font-bold mb-10">Budget summary</h1>
-
-            <div>
-                <table class="w-full">
-                    <tr>
-                        <th>Total budget</th>
-                        <td>{{budgetSummary().total_budget}}</td>
-                    </tr>
-                    <tr>
-                        <th>Amount spent</th>
-                        <td>{{budgetSummary().amount_spent}}</td>
-                    </tr>
-                    <tr>
-                        <th>Remaining</th>
-                        <td>{{budgetSummary().remaining}}</td>
-                    </tr>
-                    <tr>
-                        <th>Percent used</th>
-                        <td>{{budgetSummary().percent_used}}</td>
-                    </tr>
-                    <tr>
-                        <th>Days active</th>
-                        <td>{{budgetSummary().days_active}}</td>
-                    </tr>
-                    <tr>
-                        <th>Days remaining</th>
-                        <td>{{budgetSummary().days_remaining}}</td>
-                    </tr>
-                    <tr>
-                        <th>Avg. daily spend</th>
-                        <td>{{budgetSummary().avg_daily_spend}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>

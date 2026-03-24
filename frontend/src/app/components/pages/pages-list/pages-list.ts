@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { Pages } from '../../../services/pages';
 import { NgFor, NgIf } from '@angular/common';
 import { PageCard } from '../page-card/page-card';
-import { Loading } from "../../loading/loading";
+import { Loading } from '../../loading/loading';
+import { Error } from '../../error/error';
 
 @Component({
   selector: 'app-pages-list',
-  imports: [NgFor, NgIf, PageCard, Loading],
+  imports: [NgFor, NgIf, PageCard, Loading, Error],
   templateUrl: './pages-list.html',
   styleUrl: './pages-list.css',
   standalone: true,
@@ -19,18 +20,29 @@ export class PagesList implements OnInit {
   ) {}
 
   pages = signal<any>([]);
-  loading = signal<boolean>(false)
+  loading = signal<boolean>(false);
+  errMsg = signal<string | null>(null);
 
   ngOnInit() {
-    this.loading.set(true)
-    this.pageService.myPages().subscribe((data: any) => {
-      this.pages.set(data.data);
-      this.loading.set(false)
-    });
+    this.loading.set(true);
+    this.pageService.myPages().subscribe(
+      (data: any) => {
+        this.pages.set(data.data);
+        this.loading.set(false);
+      },
+      (err) => {
+        console.error("fuck", err)
+        this.errMsg.set("Can't find pages");
+        this.loading.set(false);
+
+        setTimeout(() => {
+          this.errMsg.set(null);
+        }, 3000);
+      },
+    );
   }
 
   newPage() {
     this.router.navigate(['/create-page']);
   }
-
 }

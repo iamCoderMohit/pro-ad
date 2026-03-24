@@ -26,6 +26,7 @@ export class EditCampaign {
   camp = signal<any>([]);
   currentId: string | null = null
   loading = false
+  errMsg = signal('')
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -43,7 +44,16 @@ export class EditCampaign {
             amount: data.data.budget_amount,
             end_date: data.data.end_date,
           });
-        });
+        },
+        () => {
+          this.errMsg.set("Can't get campaign details")
+          this.loading = false
+
+          setTimeout(() => {
+            this.errMsg.set('')
+          }, 3000);
+        }
+      );
       }
     });
   }
@@ -67,6 +77,14 @@ export class EditCampaign {
             this.loading = false
             this.router.navigate(['/campaign', this.currentId]);
           },
+          error: () => {
+          this.errMsg.set("Can't update campaign")
+          this.loading = false
+
+          setTimeout(() => {
+            this.errMsg.set('')
+          }, 3000);
+        }
         });
     }
   }

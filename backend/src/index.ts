@@ -6,11 +6,17 @@ import pageAdminRouter from "./routes/page.admin.route"
 import campaignRouter from "./routes/campaign.route"
 import campaignAdminRouter from "./routes/campaign.admin.route"
 import spendRouter from "./routes/spendLogs.route"
+import cors from 'cors'
 
 export const app = express()
 app.use(cookieParser())
 
 app.use(express.json())
+
+cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+})
 
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/page", pageRouter)

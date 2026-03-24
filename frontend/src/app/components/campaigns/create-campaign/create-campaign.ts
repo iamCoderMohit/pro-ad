@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Campaigns } from '../../../services/campaigns';
 import { Router } from '@angular/router';
 import { Loading } from "../../loading/loading";
+import { Error } from "../../error/error";
 
 @Component({
   selector: 'app-create-campaign',
-  imports: [ReactiveFormsModule, Loading],
+  imports: [ReactiveFormsModule, Loading, Error],
   templateUrl: './create-campaign.html',
   styleUrl: './create-campaign.css',
 })
@@ -22,6 +23,7 @@ export class CreateCampaign implements OnInit {
   constructor(private campaignService: Campaigns, private router: Router) {}
   data: string | null = null
   loading: boolean = false
+  errMsg = signal('')
 
   ngOnInit() {
     const data = history.state.id
@@ -36,6 +38,14 @@ export class CreateCampaign implements OnInit {
         next: () => {
           this.loading = false
           this.router.navigate(['/pages-list', this.data])
+        },
+        error: () => {
+          this.errMsg.set("Can't create campaign, try again")
+          this.loading = false
+
+          setTimeout(() => {
+            this.errMsg.set("")
+          }, 3000);
         }
       })
     }

@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
 import { Auth } from '../services/auth';
-import { Router } from 'express';
+import { CanActivateFn, Router } from '@angular/router';
 
 export const adminGuard: CanActivateFn = () => {
   const auth = inject(Auth);
@@ -10,5 +9,5 @@ export const adminGuard: CanActivateFn = () => {
     return true;
   }
 
-  return inject(Router).createUrlTree(['/']);
+  return inject(Router).createUrlTree(['/']); 
 };

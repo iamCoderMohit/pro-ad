@@ -4,10 +4,11 @@ import {NgIf} from '@angular/common'
 import {Auth} from "../../services/auth"
 import { Router, RouterLink } from '@angular/router';
 import { Loading } from "../loading/loading";
+import { Error } from "../error/error";
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NgIf, RouterLink, Loading],
+  imports: [ReactiveFormsModule, NgIf, RouterLink, Loading, Error],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -17,22 +18,27 @@ export class Login {
     password: new FormControl('', Validators.minLength(6))
   })
 
-  errMsg = ''
-  loading = false
+  errMsg = signal('')
+  loading = signal(false)
 
   constructor(private authService: Auth, private router: Router) {}
 
   onSubmit() {
     if(this.form.valid) {
-      this.loading = true
+      this.loading.set(true)
       const val = this.form.value
       this.authService.login(val.email!, val.password!).subscribe({
         next: (res) => {
-          this.loading = false
+          this.loading.set(false)
           this.router.navigate(["/create-page"])
         },
         error: (err) => {
-          this.errMsg = err.error.message || 'Login failed'
+          this.errMsg.set('Login failed, try again')
+          this.loading.set(false)
+
+          setTimeout(() => {
+            this.errMsg.set('')
+          }, 3000);
         }
       })
     }

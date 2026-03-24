@@ -6,10 +6,14 @@
         <input type="text" formControlName="category" placeholder="category of page (eg. Clothing, Teaching, Food)" class="border p-1">
 
         <button class="bg-black text-white cursor-pointer flex justify-center p-1" type="submit">
-            @if(loading) {
+            @if(loading()) {
                 <app-loading></app-loading>
             } @else {
                 Create Page            }
         </button>
     </form>
+
+    @if(errMsg()) {
+        <app-error [error]="errMsg()"></app-error>
+    }
 </div>

@@ -7,7 +7,8 @@ import { Injectable, signal } from '@angular/core';
 export class Auth {
   private baseUrl = '/api/v1/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   login(email: string, password: string) {
     return this.http.post(`${this.baseUrl}/login`, { email, password });
@@ -17,7 +18,7 @@ export class Auth {
     return this.http.post(`${this.baseUrl}/signup`, { name, email, password });
   }
 
-  user = signal<{ id: string; email: string; role: string } | null>(null);
+  user = signal<{ id: string; email: string; role: string } | null | undefined>(undefined);
 
 loadUser(): Promise<void> {
   return new Promise((resolve) => {
@@ -26,18 +27,19 @@ loadUser(): Promise<void> {
       next: (data: any) => {
           console.log("called")
           this.user.set(data.data);
+          console.log(this.user())
           resolve();
         },
         error: (err) => {
-          console.error("load user err", err)
-          this.user.set(null);
           resolve();
         }
       });
   });
 }
 
+
   isAdmin() {
+    console.log(this.user()?.role)
     return this.user()?.role === 'admin';
   }
 }

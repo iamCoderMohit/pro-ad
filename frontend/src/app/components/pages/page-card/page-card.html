@@ -2,7 +2,7 @@
   class="bg-black/20 p-2 border cursor-pointer transition-all hover:bg-black/40 flex justify-between"
   (click)="pageDetail(id)"
 >
-  <div>
+  <div class="flex flex-col gap-5 text-lg">
     <h1>
       <h1 class="inline font-bold">Name :</h1>
       {{ name }}
@@ -28,6 +28,10 @@
     </div>
   } @else {
     <app-click-btn></app-click-btn>
+  }
+
+  @if(errMsg()) {
+    <app-error [error]="errMsg()"></app-error>
   }
 
 </div>

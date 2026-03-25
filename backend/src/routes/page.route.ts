@@ -1,9 +1,9 @@
 import express from "express"
-import verifyUser from "../middleware/auth"
-import { errorResponse, successResponse } from "../utils/apiResponse"
-import { Page } from "../zod/page"
-import { db } from "../config/drizzle"
-import { pages } from "../db/schema"
+import verifyUser from "../middleware/auth.js"
+import { errorResponse, successResponse } from "../utils/apiResponse.js"
+import { Page } from "../zod/page.js"
+import { db } from "../config/drizzle.js"
+import { pages } from "../db/schema/page.js"
 import { and, eq } from "drizzle-orm"
 
 const pageRouter = express.Router()

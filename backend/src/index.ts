@@ -1,11 +1,11 @@
 import express from "express"
-import authRouter from "./routes/auth.route"
-import pageRouter from "./routes/page.route"
+import authRouter from "./routes/auth.route.js"
+import pageRouter from "./routes/page.route.js"
 import cookieParser from "cookie-parser"
-import pageAdminRouter from "./routes/page.admin.route"
-import campaignRouter from "./routes/campaign.route"
-import campaignAdminRouter from "./routes/campaign.admin.route"
-import spendRouter from "./routes/spendLogs.route"
+import pageAdminRouter from "./routes/page.admin.route.js"
+import campaignRouter from "./routes/campaign.route.js"
+import campaignAdminRouter from "./routes/campaign.admin.route.js"
+import spendRouter from "./routes/spendLogs.route.js"
 import cors from 'cors'
 
 export const app = express()

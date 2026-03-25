@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm"
-import { db } from "../config/drizzle"
-import { campaign } from "../db/schema"
-import { campaign_spend_log } from "../db/schema/campaign_spend_log"
+import { db } from "../config/drizzle.js"
+import { campaign } from "../db/schema/campaign.js"
+import { campaign_spend_log } from "../db/schema/campaign_spend_log.js"
 import cron from 'node-cron'
 
 const simulateDailySpend = async () => {

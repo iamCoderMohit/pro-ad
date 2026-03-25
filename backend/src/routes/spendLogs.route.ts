@@ -1,10 +1,10 @@
 import express from "express"
-import { db } from "../config/drizzle"
-import { campaign_spend_log } from "../db/schema/campaign_spend_log"
+import { db } from "../config/drizzle.js"
+import { campaign_spend_log } from "../db/schema/campaign_spend_log.js"
 import { desc, eq } from "drizzle-orm"
-import { errorResponse, successResponse } from "../utils/apiResponse"
-import verifyUser from "../middleware/auth"
-import { campaign } from "../db/schema"
+import { errorResponse, successResponse } from "../utils/apiResponse.js"
+import verifyUser from "../middleware/auth.js"
+import { campaign } from "../db/schema/campaign.js"
 
 const spendRouter = express.Router()
 

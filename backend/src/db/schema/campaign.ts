@@ -1,6 +1,6 @@
 import { doublePrecision, pgTable, text, uuid, timestamp, pgEnum } from "drizzle-orm/pg-core";
-import { pages } from "./page";
-import { users } from "./user";
+import { pages } from "./page.js";
+import { users } from "./user.js";
 
 export const statusEnum = pgEnum("status", ["cancelled", "completed", "paused", "draft", "active"])
 

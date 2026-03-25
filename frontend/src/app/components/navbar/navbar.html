@@ -1,10 +1,21 @@
-<div class="flex justify-around p-5">
+<div class="flex justify-between items-center p-5 flex-wrap gap-4">
     <div class="cursor-pointer" (click)="home()">
-        <h1 class="font-bold">Pro-Ad</h1>
+        <h1 class="font-bold text-lg">Pro-Ad</h1>
     </div>
-    <div class="flex gap-10 text-sm">
+    <div class="flex gap-4 md:gap-10 text-sm">
         <button class="cursor-pointer" (click)="pages()">Pages</button>
         <button class="cursor-pointer" (click)="signup()">Sign up</button>
         <button class="cursor-pointer" (click)="login()">Sign in</button>
+        <button class="cursor-pointer" (click)="logout()">
+            @if(loading) {
+                <app-loading></app-loading>
+            } @else {
+                Log out
+            }
+        </button>
+
+        @if(errMsg()) {
+            <app-error [error]="errMsg()"></app-error>
+        }
     </div>
 </div>

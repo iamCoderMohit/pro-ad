@@ -1,7 +1,8 @@
-<div class="flex">
-  <div class="w-1/2 flex items-center justify-center flex-col mt-30 gap-10">
+<div class="flex flex-col md:flex-row">
+
+  <div class="w-full md:w-1/2 flex items-center justify-center flex-col mt-16 md:mt-30 gap-10 px-6">
     <h1 class="text-lg font-bold text-center">Create a new account</h1>
-    <form action="" [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+    <form action="" [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5 w-full max-w-sm">
       <input type="text" formControlName="name" placeholder="Name" class="border p-1" />
       <input type="email" formControlName="email" placeholder="Email" class="border p-1" />
       <input type="password" formControlName="password" placeholder="Password" class="border p-1" />
@@ -23,12 +24,13 @@
       </button>
     </h1>
   </div>
-  <div class="w-1/2 flex justify-center flex-col mt-30">
-    <h1 class="text-4xl font-bold">
+
+  <div class="w-full md:w-1/2 flex justify-center flex-col mt-10 md:mt-30 px-6 pb-16 md:pb-0">
+    <h1 class="text-3xl md:text-4xl font-bold">
       Grow your business <br />
       with us.
     </h1>
-    <h1 class="">Get ready to be paired with thousands of our partners</h1>
+    <p class="mt-2">Get ready to be paired with thousands of our partners</p>
   </div>
 
   @if(errMsg()) {

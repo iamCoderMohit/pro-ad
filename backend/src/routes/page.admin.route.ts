@@ -1,8 +1,8 @@
 import express from "express"
-import verifyAdmin from "../middleware/admin"
-import { errorResponse, successResponse } from "../utils/apiResponse"
-import { db } from "../config/drizzle"
-import { pages } from "../db/schema"
+import verifyAdmin from "../middleware/admin.js"
+import { errorResponse, successResponse } from "../utils/apiResponse.js"
+import { db } from "../config/drizzle.js"
+import { pages } from "../db/schema/page.js"
 import { eq } from "drizzle-orm"
 
 const pageAdminRouter = express.Router()

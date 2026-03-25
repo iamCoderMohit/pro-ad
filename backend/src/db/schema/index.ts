@@ -1,3 +1,3 @@
-export * from "./user"
-export * from "./page"
-export * from "./campaign"
+export * from "./user.js"
+export * from "./page.js"
+export * from "./campaign.js"

@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { errorResponse } from "../utils/apiResponse";
+import { errorResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken"
 import type {JwtPayload} from "jsonwebtoken"
 

@@ -1,9 +1,9 @@
 import express from "express";
-import verifyUser from "../middleware/auth";
-import { Campaign } from "../zod/campaign";
-import { errorResponse, successResponse } from "../utils/apiResponse";
-import { db } from "../config/drizzle";
-import { campaign } from "../db/schema";
+import verifyUser from "../middleware/auth.js";
+import { Campaign } from "../zod/campaign.js";
+import { errorResponse, successResponse } from "../utils/apiResponse.js";
+import { db } from "../config/drizzle.js";
+import { campaign } from "../db/schema/campaign.js";
 import { and, eq } from "drizzle-orm";
 
 const campaignRouter = express.Router();

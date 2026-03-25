@@ -1,5 +1,5 @@
 import { date, doublePrecision, pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
-import { campaign } from "./campaign";
+import { campaign } from "./campaign.js";
 
 export const campaign_spend_log = pgTable("campaign_spend_log", {
     id: uuid("id").defaultRandom().primaryKey(),

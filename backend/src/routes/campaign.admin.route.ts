@@ -1,7 +1,7 @@
 import express from "express"
-import verifyAdmin from "../middleware/admin"
-import { db } from "../config/drizzle"
-import { errorResponse, successResponse } from "../utils/apiResponse"
+import verifyAdmin from "../middleware/admin.js"
+import { db } from "../config/drizzle.js"
+import { errorResponse, successResponse } from "../utils/apiResponse.js"
 
 const campaignAdminRouter = express.Router()
 

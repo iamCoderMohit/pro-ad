@@ -1,5 +1,5 @@
-import { app } from ".";
-import { startSpendSimulator } from "./jobs/spendSimulator";
+import { app } from "./index.js";
+import { startSpendSimulator } from "./jobs/spendSimulator.js";
 
 const PORT = process.env.PORT
 

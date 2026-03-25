@@ -32,6 +32,9 @@ A full-stack ad campaign management system that uses authentication, allows CRUD
 ## Installation
 
 1. Clone the repository
+   ```bash
+   git clone https://github.com/iamCoderMohit/pro-ad
+   ```
 
 2. Install dependencies:
 

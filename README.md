@@ -1,5 +1,9 @@
 # Pro-Ad
 
+> ⚠️ If you face any issues during setup, feel free to contact me at:  
+> 📧 mohitjoshiu@gmail.com  
+> 📧 +91 9258175884 (whatsapp or direct call)
+
 ## Project Title & Overview
 
 **Title:** Pro-Ad

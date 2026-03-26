@@ -38,6 +38,7 @@ A full-stack ad campaign management system that uses authentication, allows CRUD
 
 2. Install dependencies:
 
+    go to frontend and backend directories one by one using `cd`, then for each
    ```bash
    npm install
    ```

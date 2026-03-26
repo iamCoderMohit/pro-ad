@@ -55,8 +55,7 @@ const simulateDailySpend = async () => {
 }
 
 // every day at midnight in prod
-// '* * * * *' every minute — use this in dev to test it working
 export const startSpendSimulator = () => {
-    cron.schedule('* * * * *', simulateDailySpend)
+    cron.schedule('0 0 * * *', simulateDailySpend)
     console.log('Spend simulator cron job started')
 }

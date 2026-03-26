@@ -74,7 +74,7 @@ A full-stack ad campaign management system that uses authentication, allows CRUD
 ### Frontend
 
 ```bash
-node start
+npm start
 ```
 or
 ```bash
@@ -197,13 +197,11 @@ backend/
 
 ## Screenshots
 
-*Add screenshots for the following:*
-
-* Login
-* Signup
-* Pages List
-* Create Page
-* Campaign Dashboard
+![Login page](./assests/login.png)
+![Signup page](./assests/signup.png)
+![Pages list page](./assests/pages-list.png)
+![Create page](./assests/create-page.png)
+![Campaign dashboard page](./assests/camp-dash.png)
 
 ---
 

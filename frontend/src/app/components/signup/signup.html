@@ -5,6 +5,7 @@
     <form action="" [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5 w-full max-w-sm">
       <input type="text" formControlName="name" placeholder="Name" class="border p-1" />
       <input type="email" formControlName="email" placeholder="Email" class="border p-1" />
+      <i>minimum 6 characters</i>
       <input type="password" formControlName="password" placeholder="Password" class="border p-1" />
 
       <span *ngIf="form.get('email')?.invalid && form.get('email')?.touched">Invalid email</span>

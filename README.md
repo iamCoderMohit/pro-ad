@@ -201,11 +201,11 @@ backend/
 
 ## Screenshots
 
-![Login page](./assests/login.png)
-![Signup page](./assests/signup.png)
-![Pages list page](./assests/pages-list.png)
-![Create page](./assests/create-page.png)
-![Campaign dashboard page](./assests/camp-dash.png)
+![Login page](./assets/login.png)
+![Signup page](./assets/signup.png)
+![Pages list page](./assets/pages-list.png)
+![Create page](./assets/create-page.png)
+![Campaign dashboard page](./assets/camp-dash.png)
 
 ---
 

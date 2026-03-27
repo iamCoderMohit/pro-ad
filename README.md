@@ -54,6 +54,10 @@ A full-stack ad campaign management system that uses authentication, allows CRUD
    ```
 
 3. Setup backend environment variables (`.env` file in backend):
+For DATABASE_URL you can use your local url or for testing use: 
+```
+postgresql://neondb_owner:npg_39dAMLuQROah@ep-wispy-haze-an3kyuvw-pooler.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+```
 
    ```
    PORT=...
